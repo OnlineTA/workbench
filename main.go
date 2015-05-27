@@ -9,6 +9,7 @@ import (
 func usage() {
   fmt.Fprintf(os.Stderr,
     "Usage: %s ASSIGNMENT SUBMISSION\n", os.Args[0])
+  flag.PrintDefaults()
 }
 
 func main() {
@@ -17,7 +18,8 @@ func main() {
   var submission string
 
   flag.Usage = usage
-  flag.BoolVar(&isServer, "server", false, "run in server mode")
+  flag.BoolVar(&isServer, "server", false,
+    "run in server mode (here be dragons)")
   flag.Parse()
 
   args := flag.Args()
