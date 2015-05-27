@@ -51,22 +51,22 @@ function info {
 }
 
 function run {
-  TEST="${FILE}"
-  info "Running test ${TEST}."
+  FILE=$1
+  info "Running test ${FILE}."
   $FILE "$SUBMISSION"
   case $? in
   0)
-    info "${TEST} succeded!"
+    info "${FILE} succeded!"
     ;;
   1)
-    info "${TEST} failed with a continue signal."
+    info "${FILE} failed with a continue signal."
     ;;
   2)
-    info "${TEST} failed with a fatal signal; dropping remaining tests."
+    info "${FILE} failed with a fatal signal; dropping remaining tests."
     return 1
     ;;
   *)
-    info "${TEST} failed with an unknown signal; abandon the ship!"
+    info "${FILE} failed with an unknown signal; abandon the ship!"
     return 1
   esac
 }
