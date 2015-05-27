@@ -25,4 +25,4 @@ find "$TMPDIR" -name "report.txt" &> /dev/null || {
   exit 0
 }
 
-findHaskell || exit 2
+findHaskell || exit 1
