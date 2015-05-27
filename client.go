@@ -11,7 +11,7 @@ func mktmp() string {
   var tmpdir string
   var err error
 
-  tmpdir, err = ioutil.TempDir(".", "workbench")
+  tmpdir, err = ioutil.TempDir(os.TempDir, "workbench")
   if err != nil {
     if os.IsExist(err) {
       log.Fatalf("Too many temp directories for Go to handle.")
