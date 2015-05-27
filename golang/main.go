@@ -3,6 +3,7 @@ package main
 import (
   "flag"
   "fmt"
+  "log"
   "os"
 )
 
@@ -32,6 +33,7 @@ func main() {
   submission = args[1]
 
   if ! isServer {
+    log.SetOutput(os.Stdout)
     client(assignment, submission)
   }
 }
