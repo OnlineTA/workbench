@@ -2,21 +2,29 @@
 #
 # Copyright (c) 2015 OnlineTA.
 #
-# Copenhagen Liberal License - v0.2 - May 27, 2015.
+# Copenhagen Liberal License - v0.2 - May 2015.
 
 # Rationale for bash: portability. Teachers and TAs alone may run a number of
 # different platforms and may not be interested in obscure binaries or
 # scripting languages like e.g. golang or rust. Python is a worthy alternative.
 # D'oh! What about Windows!? Maybe golang could be more portable..
 
+function usage {
+  echo "Usage: $0 ASSIGNMENT SUBMISISON"
+}
+
+if [ "$#" -ne 2 ] ; then
+  usage
+  exit 1
+fi
+
 ASSIGNMENT=$1
 SUBMISSION=$2
-LOGTAG="$0[$$]"
-LOG=""
-TMPDIR=$(mktemp --tmpdir --directory pop-e15.XXXXXX) || exit 1
 
+TMPDIR=$(mktemp --tmpdir --directory workbench.XXXXXX) || exit 1
 function clean {
-  rm -rf "$TMPDIR" #TODO: shred
+  find "$TMPDIR" -type f -exec shred --remove {} \;
+  rm -rf "$TMPDIR"
 }
 
 function fail {
@@ -24,6 +32,8 @@ function fail {
   exit $1
 }
 
+LOGTAG="$0[$$]"
+LOG=""
 function log {
   if [ "$LOG" == "logger" ] ; then
     logger -p "$1" -t "$LOGTAG" "$2"
@@ -35,11 +45,6 @@ function log {
 function info {
   log user.info "$1"
 }
-
-if [ -z "$ASSIGNMENT" ] || [ -z "$SUBMISSION" ] ; then
-  echo "Usage: $0 <assignment> <submission>"
-  fail 1
-fi
 
 function run {
   TEST="${FILE}"
@@ -72,14 +77,22 @@ function phase {
     <(find "$1/" -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz)
 }
 
+function assignment {
+  info "Running assignment ${ASSIGNMENT}/.."
+  while IFS= read -r -d $'\0' PHASE; do
+    if ! phase "$PHASE" ; then
+      return 1
+    fi
+  done < \
+    <(find "${ASSIGNMENT}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz)
+}
+
 info "Checking submission ${SUBMISSION} for assignment ${ASSIGNMENT}.."
 cp -r "${SUBMISSION}" "$TMPDIR/" || fail 1
 info "Submission ${SUBMISSION} copied to ${TMPDIR}."
-while IFS= read -r -d $'\0' PHASE; do
-  if ! phase "$PHASE" ; then
-    fail 1
-  fi
-done < \
-  <(find "${ASSIGNMENT}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz)
+
+if ! assignment ; then
+  fail 1
+fi
 
 clean

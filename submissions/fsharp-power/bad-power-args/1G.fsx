@@ -1,0 +1,1 @@
+let power x = x
