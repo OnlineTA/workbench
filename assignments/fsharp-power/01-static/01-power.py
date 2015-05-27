@@ -32,6 +32,7 @@ def main():
   if not match:
     print("power skulle have netop 2 argumenter: m og n.")
     print("Resultatet skulle være m opløftet i n'te potens.")
+    sys.exit(2)
 
 if __name__ == "__main__":
   main()
