@@ -21,14 +21,12 @@ fi
 ASSIGNMENT=$1
 SUBMISSION=$2
 
-OLD_IFS=$IFS
 TMPDIR=$(mktemp --tmpdir --directory workbench.XXXXXX) || exit 1
 function clean {
   info "Shreding ${TMPDIR}."
 
   find "$TMPDIR" -type f -exec shred --remove {} \;
   rm -rf "$TMPDIR"
-  IFS=$OLD_IFS
 }
 
 function fail {
@@ -53,7 +51,7 @@ function info {
 function run {
   FILE=$1
   info "Running test ${FILE}."
-  $FILE "$SUBMISSION"
+  $FILE "$TMPDIR"
   case $? in
   0)
     info "${FILE} succeded!"
@@ -74,27 +72,28 @@ function run {
 function phase {
   info "Running phase $1/."
 
-  for FILE in $(find "$1/" \
-    -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz); do
+  while IFS= read -r -d $'\0' FILE; do
     if ! run "$FILE" ; then
       return 1
     fi
-  done
+  done < <(find "$1/" \
+    -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz)
+
 }
 
 function assignment {
   info "Running assignment ${ASSIGNMENT}/."
 
-  for PHASE in $(find "${ASSIGNMENT}" \
-    -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz); do
+  while IFS= read -r -d $'\0' PHASE; do
     if ! phase "$PHASE" ; then
       return 1
     fi
-  done
+  done < <(find "${ASSIGNMENT}" \
+    -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz)
 }
 
 info "Checking submission ${SUBMISSION} for assignment ${ASSIGNMENT}."
-cp -r "${SUBMISSION}" "$TMPDIR/" || fail 1
+cp -r "${SUBMISSION}/"* "$TMPDIR/" || fail 1
 info "Submission ${SUBMISSION} copied to ${TMPDIR}."
 
 if ! assignment ; then
