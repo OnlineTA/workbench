@@ -24,6 +24,8 @@ SUBMISSION=$2
 OLD_IFS=$IFS
 TMPDIR=$(mktemp --tmpdir --directory workbench.XXXXXX) || exit 1
 function clean {
+  info "Shreding ${TMPDIR}."
+
   find "$TMPDIR" -type f -exec shred --remove {} \;
   rm -rf "$TMPDIR"
   IFS=$OLD_IFS
@@ -50,7 +52,7 @@ function info {
 
 function run {
   TEST="${FILE}"
-  info "Running test ${TEST}.."
+  info "Running test ${TEST}."
   $FILE "$SUBMISSION"
   case $? in
   0)
@@ -70,7 +72,7 @@ function run {
 }
 
 function phase {
-  info "Running phase $1/.."
+  info "Running phase $1/."
 
   for FILE in $(find "$1/" \
     -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz); do
@@ -81,7 +83,8 @@ function phase {
 }
 
 function assignment {
-  info "Running assignment ${ASSIGNMENT}/.."
+  info "Running assignment ${ASSIGNMENT}/."
+
   for PHASE in $(find "${ASSIGNMENT}" \
     -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz); do
     if ! phase "$PHASE" ; then
@@ -90,7 +93,7 @@ function assignment {
   done
 }
 
-info "Checking submission ${SUBMISSION} for assignment ${ASSIGNMENT}.."
+info "Checking submission ${SUBMISSION} for assignment ${ASSIGNMENT}."
 cp -r "${SUBMISSION}" "$TMPDIR/" || fail 1
 info "Submission ${SUBMISSION} copied to ${TMPDIR}."
 
