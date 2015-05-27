@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2015 OnlineTA.
+#
+# Copenhagen Liberal License - v0.2 - May 27, 2015.
+
+# Rationale for bash: portability. Teachers and TAs alone may run a number of
+# different platforms and may not be interested in obscure binaries or
+# scripting languages like e.g. golang or rust. Python is a worthy alternative.
+# D'oh! What about Windows!? Maybe golang could be more portable..
+
+ASSIGNMENT=$1
+SUBMISSION=$2
+LOGTAG="$0[$$]"
+LOG=""
+TMPDIR=$(mktemp --tmpdir --directory pop-e15.XXXXXX) || exit 1
+
+function clean {
+  rm -rf "$TMPDIR" #TODO: shred
+}
+
+function fail {
+  clean
+  exit $1
+}
+
+function log {
+  if [ "$LOG" == "logger" ] ; then
+    logger -p "$1" -t "$LOGTAG" "$2"
+  elif [ "$LOG" == "echo" ] ; then
+    echo "$LOGTAG $1 $2"
+  fi
+}
+
+function info {
+  log user.info "$1"
+}
+
+if [ -z "$ASSIGNMENT" ] || [ -z "$SUBMISSION" ] ; then
+  echo "Usage: $0 <assignment> <submission>"
+  fail 1
+fi
+
+function run {
+  TEST="${FILE}"
+  info "Running test ${TEST}.."
+  $FILE "$SUBMISSION"
+  case $? in
+  0)
+    info "${TEST} succeded!"
+    ;;
+  1)
+    info "${TEST} failed with a continue signal."
+    ;;
+  2)
+    info "${TEST} failed with a fatal signal; dropping remaining tests."
+    return 1
+    ;;
+  *)
+    info "${TEST} failed with an unknown signal; abandon the ship!"
+    return 1
+  esac
+}
+
+function phase {
+  info "Running phase $1/.."
+  while IFS= read -r -d $'\0' FILE; do
+    if ! run "$FILE" ; then
+      return 1
+    fi
+  done < \
+    <(find "$1/" -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz)
+}
+
+info "Checking submission ${SUBMISSION} for assignment ${ASSIGNMENT}.."
+cp -r "${SUBMISSION}" "$TMPDIR/" || fail 1
+info "Submission ${SUBMISSION} copied to ${TMPDIR}."
+while IFS= read -r -d $'\0' PHASE; do
+  if ! phase "$PHASE" ; then
+    fail 1
+  fi
+done < \
+  <(find "${ASSIGNMENT}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz)
+
+clean
