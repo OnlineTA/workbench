@@ -8,7 +8,7 @@ In principle, you can use workbench to test student submissions locally, but
 beware that workbench only mirros the OnlineTA testing interface, and DOES NOT
 perform any sandboxing. What might be safe to test online, is not likely to be
 safe to test with workbench. That is, unless you trust the students not to
-misbehave beyond reason, or like living on the edge.
+misbehave beyond reason, or fancy living on the edge.
 
 # Example
 
