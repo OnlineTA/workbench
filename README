@@ -30,8 +30,8 @@ multiple benefits:
      reinforcing benefit 2.a., requiring to break out of multiple sandboxing
      approaches for ultimate exploitation of the testing system.
 
-One particular application of benefit 2.b. as exemplified in this workbench is
-the split between static and dynamic testing.
+One particular application of benefit 2.b., as exemplified in this workbench,
+is the split between static and dynamic testing.
 
 By declaring a static stratum, the teacher states that the student submission
 is to be regarded as data --- it should never be succeptible to execution.
@@ -42,10 +42,11 @@ the submitted code).
 On the other hand, by declaring a dynamic stratum, the teacher states that
 access is only needed to e.g. the input and output streams of the program
 submitted by the student (and not its source code). This means that the teacher
-and student code can run sandboxed from each other, and communicate via sockets
-or a further constrained protocol.
+and student code can run sandboxed from each other, and communicate via
+sockets, or a further constrained protocol.
 
 Of course, in the presence of vulnerabilities in teacher code, what is regarded
 as data may quickly become programs; and of course, source code can be
-exchanged via sockets. Depending on the independent sandboxing model chosen for
-static and dynamic strata, this split can have various benefits.
+exchanged via sockets. This separation permits merely to employ different
+sandboxing models at the two types of strata, and is fairly obvious for
+teachers (in Computer Science) to employ.
