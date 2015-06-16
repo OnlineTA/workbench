@@ -1,1 +1,9 @@
-workbench — a simple testing framework
+workbench — a testbed for OnlineTA tests
+
+See the ./assignments/ subdirectory for some sample assignments. For each of
+them, there are a couple sample good and bad solutions under
+./submissions/<assignment>/.
+
+For instance, you might consider running:
+
+  $ ./workbench ./assignments/c-stackcalc/ ./submissions/c-stackcalc/good/
