@@ -1,5 +1,17 @@
 workbench — a testbed for OnlineTA tests
 
+OnlineTA workbench is a light-weight, cross-platform mimic implementation of
+the OnlineTA testing interface. It is intended as a programming environment for
+teachers to develop tests for OnlineTA.
+
+In principle, you can use workbench to test student submissions locally, but
+beware that workbench only mirros the OnlineTA testing interface, and DOES NOT
+perform any sandboxing. What might be safe to test online, is not likely to be
+safe to test with workbench. That is, unless you trust the students not to
+misbehave beyond reason, or like living on the edge.
+
+# Example
+
 See the ./assignments/ subdirectory for some sample assignments. For each of
 them, there are a couple sample good and bad solutions under
 ./submissions/<assignment>/.
@@ -7,6 +19,8 @@ them, there are a couple sample good and bad solutions under
 For instance, you might consider running:
 
   $ ./workbench ./assignments/c-stackcalc/ ./submissions/c-stackcalc/good/
+
+# Testing Interface
 
 The testing of a submission is stratified into strata, or phases. This has
 multiple benefits:
@@ -48,5 +62,5 @@ sockets, or a further constrained protocol.
 Of course, in the presence of vulnerabilities in teacher code, what is regarded
 as data may quickly become programs; and of course, source code can be
 exchanged via sockets. This separation permits merely to employ different
-sandboxing models at the two types of strata, and is fairly obvious for
-teachers (in Computer Science) to employ.
+sandboxing models at the two types of strata, and is fairly elicit for teachers
+(in Computer Science) to follow.
