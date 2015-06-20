@@ -1,4 +1,6 @@
-workbench — a testbed for OnlineTA tests
+= workbench — a testbed for OnlineTA tests
+:sectanchors:
+:sectlinks:
 
 OnlineTA workbench is a lightweight, cross-platform mimic implementation of the
 OnlineTA testing interface. It is intended as a programming environment for
@@ -10,7 +12,11 @@ perform any sandboxing. What might be safe to test online, is not likely to be
 safe to test with the workbench. That is, unless you trust the students not to
 misbehave beyond reason, or fancy living on the edge.
 
-# Example
+See also <<future-work>> below.
+
+:toc:
+
+== Example
 
 See the ./assignments/ subdirectory for some sample assignments. For each of
 them, there are a couple sample good and bad solutions under
@@ -18,14 +24,14 @@ them, there are a couple sample good and bad solutions under
 
 For instance, you might consider running:
 
-  $ ./workbench ./assignments/c-stackcalc/ ./submissions/c-stackcalc/good/
+ $ ./workbench ./assignments/c-stackcalc/ ./submissions/c-stackcalc/good/
 
-# Testing Interface
+== Testing Interface
 
 The testing of a submission is stratified into strata, or phases. This has
 multiple benefits:
 
-1. Preconditioning. For instance:
+. Preconditioning. For instance:
 
   * Student code must be adequately structured (e.g. contain a src directory)
     for any further analysis to take place.
@@ -35,7 +41,7 @@ multiple benefits:
   * Student code must finish executing before we do any post-processing of the
     resulting environment.
 
-2  Security. There are several benefits in terms of security:
+. Security. There are several benefits in terms of security:
 
   a. Breaking out of the sandbox in one strata, does not (immediately) give
      any means to exploit the next strata.
@@ -47,7 +53,7 @@ multiple benefits:
 One particular application of benefit 2.b., as exemplified in this workbench,
 is the split between static and dynamic testing.
 
-# Static Strata
+== Static Strata
 
 By declaring a static stratum, the teacher states that within this stratum, the
 student submission is to be regarded as data --- it should never be succeptible
@@ -79,7 +85,7 @@ For instance, it might be easier to leak the assessment code of a static strata
 than it is to leak other students' submissions, or make OnlineTA terminate the
 assessment prematurely with the grade that the student gets to decide.)
 
-# Dynamic Strata
+== Dynamic Strata
 
 By declaring a dynamic stratum, the teacher states that access is only needed
 to e.g. the input and output streams of the program submitted by the student
@@ -95,7 +101,7 @@ solution. This means that the execution of student code should be more
 aggressively sandboxed from both the source code, and the execution of
 assessment code.
 
-# Why separate static and dynamic tests?
+== Why separate static and dynamic tests?
 
 Of course, in the presence of vulnerabilities in assessment code, what is
 regarded as data may quickly turn into programs; and of course, source code can
@@ -106,3 +112,17 @@ different security models for each type of strata: employ different sandboxing
 models for each type, and make clear, differentiating statements about their
 intent.  In particular, the static/dynamic split seems fairly self-evident for
 teachers in Computer Science to follow.
+
+== Future Work
+
+workbench should run on most Unix-like platforms, but it is far-fetched to call
+it "`cross-platform`". Even being cross-platform however, would not be
+sufficient for a pleasant assessment code development environment.
+
+When the OnlineTA testing interface becomes compatible with
+https://www.vagrantup.com/[Vagrant], which it probably should, Vagrant could
+enable a development environment where the teachers could dry-run their
+assessment code, not just against a mimic testing interface, but an exact
+replica of the OnlineTA testing and sandboxing infrastructure. This would
+certainly be useful if devising sandboxes is ever put directly in the hands of
+the teachers.
