@@ -1,6 +1,7 @@
 = workbench — a testbed for OnlineTA tests
 :sectanchors:
 :sectlinks:
+:toc:
 
 OnlineTA workbench is a lightweight, cross-platform mimic implementation of the
 OnlineTA testing interface. It is intended as a programming environment for
@@ -13,8 +14,6 @@ safe to test with the workbench. That is, unless you trust the students not to
 misbehave beyond reason, or fancy living on the edge.
 
 See also <<future-work>> below.
-
-:toc:
 
 == Example
 
