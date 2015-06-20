@@ -56,7 +56,8 @@ submission, and perhaps modify and create new files to pass on to future
 strata. Some examples of static tests include:
 
   * check if all the necessary files are present;
-  * perform plaigiarism, gaming checks;
+  * perform plaigiarism checks;
+  * check if student is trying to game the tests;
   * run student code through a linter;
   * compile the student code; and
   * look for relevant regular and context-free patterns in the student code.
