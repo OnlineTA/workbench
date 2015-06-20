@@ -120,10 +120,10 @@ workbench should run on most Unix-like platforms, but it is far-fetched to call
 it ``cross-platform``. Even being cross-platform however, would not be
 sufficient for a pleasant programming environment for writing assessment code.
 
-When the OnlineTA testing interface becomes compatible with
-https://www.vagrantup.com/[Vagrant], which it probably should, Vagrant could
-enable a programming environment where the teachers could dry-run their
-assessment code, not just against a mimic testing interface, but an exact,
-local replica of the OnlineTA testing and sandboxing infrastructure. This would
-certainly be useful if devising sandboxes is ever put directly in the hands of
-the teachers or an automatic tool.
+The OnlineTA testing interface should perhaps eventually become compatible with
+https://www.vagrantup.com/[Vagrant]. This would enable a programming
+environment where the teachers could dry-run their assessment code, not just
+against a mimic testing interface, but an exact, local replica of the OnlineTA
+testing and sandboxing infrastructure, without the hurdles of dealing with our
+fancypants Linux setup. This would certainly be useful if devising sandboxes is
+ever put directly in the hands of the teachers or an automatic tool.
