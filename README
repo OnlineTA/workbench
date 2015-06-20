@@ -47,20 +47,58 @@ multiple benefits:
 One particular application of benefit 2.b., as exemplified in this workbench,
 is the split between static and dynamic testing.
 
-By declaring a static stratum, the teacher states that the student submission
-is to be regarded as data --- it should never be succeptible to execution.
-Instead, the teacher would like access to the files of the submission, and
-perhaps modify and create new files to pass on to future strata (e.g. compile
-the submitted code).
+# Static Strata
 
-On the other hand, by declaring a dynamic stratum, the teacher states that
-access is only needed to e.g. the input and output streams of the program
-submitted by the student (and not its source code). This means that the teacher
-and student code can run sandboxed from each other, and communicate via
-sockets, or a further constrained protocol.
+By declaring a static stratum, the teacher states that within this stratum, the
+student submission is to be regarded as data --- it should never be succeptible
+to execution. Here, the teacher would like access to the files of the
+submission, and perhaps modify and create new files to pass on to future
+strata. Some examples of static tests include:
 
-Of course, in the presence of vulnerabilities in teacher code, what is regarded
-as data may quickly become programs; and of course, source code can be
-exchanged via sockets. This separation permits merely to employ different
-sandboxing models at the two types of strata, and is fairly elicit for teachers
-(in Computer Science) to follow.
+  * check if all the necessary files are present;
+  * run student code through a linter;
+  * compile the student code; and
+  * look for relevant regular and context-free patterns in the student code.
+
+Crucially, the source code of the static tests does not reveal the essential
+structure of a working solution to the assignment, merely some of its
+constituents (e.g. you should have a src directory, your code should compile
+without warnings, you should be using higher-order functions, etc.)
+
+If the student breaks out of the sandbox of a static stratum and gets to see
+the source code of the static tests, it will only give the insight which was
+already readily available through hints, or give insight into how to game the
+static tests. The latter problem can be caught due to breakage of subsequent
+strata, one of which should be a human TA.
+
+# Dynamic Strata
+
+By declaring a dynamic stratum, the teacher states that access is only needed
+to e.g. the input and output streams of the program submitted by the student
+(and not its source code). This means that the teacher and student code can run
+sandboxed from each other, and communicate via sockets, or a further
+constrained protocol. Some examples of dynamic tests include:
+
+  * unit test the student code; and
+  * compare the student output with the output from a reference solution.
+
+Critically, the above tests can reveal the intricate details of a working
+solution. This means that the execution of student code should be more
+aggressively sandboxed from both the source code and the execution of
+assessment code.
+
+# Outbreaks
+
+The typical statement "breaking out of the sandbox" is more nuanced when simple
+andboxing mechanisms are composed to form more intricate sandboxes. For
+instance, it might be easier to leak the assessment code of a static strata
+than it is to leak other students' submissions, or make OnlineTA terminate the
+assessment prematurely with the grade that the student gets to decide.
+
+# Why separate static and dynamic tests?
+
+Of course, in the presence of vulnerabilities in assessment code, what is
+regarded as data may quickly become programs; and of course, source code can be
+exchanged via sockets. The separation into static and dynamic tests permits
+merely to employ a different sandboxing model for each type of strata, and is
+fairly elicit for teachers (in Computer Science) to follow.
