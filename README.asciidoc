@@ -115,7 +115,7 @@ teachers in Computer Science to follow.
 == Future Work
 
 workbench should run on most Unix-like platforms, but it is far-fetched to call
-it "`cross-platform`". Even being cross-platform however, would not be
+it ``cross-platform``. Even being cross-platform however, would not be
 sufficient for a pleasant programming environment for writing assessment code.
 
 When the OnlineTA testing interface becomes compatible with
