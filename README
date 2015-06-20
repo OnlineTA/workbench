@@ -90,7 +90,7 @@ constrained protocol. Some examples of dynamic tests include:
 
 Critically, the above tests can reveal the intricate details of a working
 solution. This means that the execution of student code should be more
-aggressively sandboxed from both the source code and the execution of
+aggressively sandboxed from both the source code, and the execution of
 assessment code.
 
 # Why separate static and dynamic tests?
