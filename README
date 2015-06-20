@@ -71,13 +71,11 @@ already readily available through hints, or give insight into how to game the
 static tests. The latter problem can be caught due to breakage of subsequent
 strata, one of which should be a human TA.
 
-# Outbreaks
-
-The typical statement "breaking out of the sandbox" is more nuanced when simple
-andboxing mechanisms are composed to form more intricate sandboxes. For
-instance, it might be easier to leak the assessment code of a static strata
+(Outbreaks: The typical statement "breaking out of the sandbox" is more nuanced
+when simple andboxing mechanisms are composed to form more intricate sandboxes.
+For instance, it might be easier to leak the assessment code of a static strata
 than it is to leak other students' submissions, or make OnlineTA terminate the
-assessment prematurely with the grade that the student gets to decide.
+assessment prematurely with the grade that the student gets to decide.)
 
 # Dynamic Strata
 
