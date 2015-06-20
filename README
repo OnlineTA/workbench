@@ -85,7 +85,7 @@ to e.g. the input and output streams of the program submitted by the student
 sandboxed from each other, and communicate via sockets, or a further
 constrained protocol. Some examples of dynamic tests include:
 
-  * unit test the student code; and
+  * property-test (unit-test, etc.) the student code; and
   * compare the student output with the output from a reference solution.
 
 Critically, the above tests can reveal the intricate details of a working
