@@ -40,7 +40,7 @@ multiple benefits:
   a. Breaking out of the sandbox in one strata, does not (immediately) give
      any means to exploit the next strata.
 
-  b. Different sandboxing models can be employed at different strata;
+  b. Different security models can be employed at different strata;
      reinforcing benefit 2.a., requiring to break out of multiple sandboxing
      approaches for ultimate exploitation of the testing system.
 
