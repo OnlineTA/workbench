@@ -15,6 +15,8 @@ misbehave beyond reason, or fancy living on the edge.
 
 See also <<future-work>> below.
 
+toc::[]
+
 == Example
 
 See the ./assignments/ subdirectory for some sample assignments. For each of
