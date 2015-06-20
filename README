@@ -96,7 +96,9 @@ assessment code.
 # Why separate static and dynamic tests?
 
 Of course, in the presence of vulnerabilities in assessment code, what is
-regarded as data may quickly become programs; and of course, source code can be
-exchanged via sockets. The separation into static and dynamic tests permits
-merely to employ a different sandboxing model for each type of strata, and is
-fairly elicit for teachers (in Computer Science) to follow.
+regarded as data may quickly turn into programs; and of course, source code can
+be exchanged via sockets. The separation into static and dynamic strata permits
+merely to employ different security models for each type of strata: employ
+different sandboxing models, and make different statements about their intent.
+In particular, the static/dynamic split seems fairly self-evident for teachers
+in Computer Science to follow.
