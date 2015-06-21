@@ -48,7 +48,7 @@ function info {
   log user.info "$1"
 }
 
-function run {
+function staticRun {
   FILE=$1
   info "Running test ${FILE}."
   $FILE "$TMPDIR"
@@ -69,25 +69,62 @@ function run {
   esac
 }
 
-function phase {
-  info "Running phase $1/."
+function staticPhase {
+  info "Running static phase $1/."
 
   while IFS= read -r -d $'\0' FILE; do
-    if ! run "$FILE" ; then
+    if ! staticRun "$FILE" ; then
       return 1
     fi
   done < <(find "$1/" \
     -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz)
+}
 
+function dynamicRun {
+  FILE=$1
+  info "Running test ${FILE}."
+  $FILE "$TMPDIR"
+  case $? in
+  0)
+    info "${FILE} succeded!"
+    ;;
+  1)
+    info "${FILE} failed with a continue signal."
+    ;;
+  2)
+    info "${FILE} failed with a fatal signal; dropping remaining tests."
+    return 1
+    ;;
+  *)
+    info "${FILE} failed with an unknown signal; abandon the ship!"
+    return 1
+  esac
+}
+
+function dynamicPhase {
+  info "Running dynamic phase $1/."
+
+  while IFS= read -r -d $'\0' FILE; do
+    if ! dynamicRun "$FILE" ; then
+      return 1
+    fi
+  done < <(find "$1/" \
+    -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -nz)
 }
 
 function assignment {
   info "Running assignment ${ASSIGNMENT}/."
 
   while IFS= read -r -d $'\0' PHASE; do
-    if ! phase "$PHASE" ; then
-      return 1
-    fi
+    if [ -n "$(basename "$PHASE" | grep "static")" ] ; then
+      if ! staticPhase "$PHASE" ; then
+        return 1
+      fi
+    else
+       if ! dynamicPhase "$PHASE" ; then
+        return 1
+      fi
+    fi  
   done < <(find "${ASSIGNMENT}" \
     -mindepth 1 -maxdepth 1 -type d -print0 | sort -nz)
 }
