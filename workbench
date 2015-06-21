@@ -4,11 +4,6 @@
 #
 # Copenhagen Liberal License - v0.2 - May 2015.
 
-# Rationale for bash: portability. Teachers and TAs alone may run a number of
-# different platforms and may not be interested in obscure binaries or
-# scripting languages like e.g. golang or rust. Python is a worthy alternative.
-# D'oh! What about Windows!? Maybe golang could be more portable..
-
 function usage {
   echo "Usage: $0 ASSIGNMENT SUBMISISON"
 }
