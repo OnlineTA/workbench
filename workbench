@@ -26,7 +26,7 @@ fi
 TMPDIR=$(mktemp --tmpdir --directory workbench.XXXXXX) || exit 1
 
 function clean {
-  info "Shreding ${TMPDIR}."
+  info "Shredding ${TMPDIR}."
 
   find "$TMPDIR" -type f -exec shred --remove {} \;
   # TODO: shreding depends on the underlying file system to actually overwrite
