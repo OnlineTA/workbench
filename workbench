@@ -13,20 +13,27 @@ function usage {
   echo "Usage: $0 ASSIGNMENT SUBMISISON"
 }
 
-if [ "$#" -ne 2 ] ; then
+ASSIGNMENT=$1
+SUBMISSION=$2
+
+if [ ! -d "$ASSIGNMENT" ] || [ ! -d "$SUBMISSION" ] ; then
+  # TODO: maybe check that it actually looks like an assignment and submission,
+  # somehow..
   usage
   exit 1
 fi
 
-ASSIGNMENT=$1
-SUBMISSION=$2
-
 TMPDIR=$(mktemp --tmpdir --directory workbench.XXXXXX) || exit 1
+
 function clean {
   info "Shreding ${TMPDIR}."
 
   find "$TMPDIR" -type f -exec shred --remove {} \;
+  # TODO: shreding depends on the underlying file system to actually overwrite
+  # the data; this might be too lax an assumption on some systems.
+
   rm -rf "$TMPDIR"
+  # TODO: directory structure doesn't get shredded.
 }
 
 function fail {
