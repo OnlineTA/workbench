@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-cd "$1"
-
-make main --silent || exit 2
+make main -C "$1" --silent || exit 2
