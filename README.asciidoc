@@ -60,11 +60,11 @@ submission, and perhaps modify and create new files to pass on to future
 phases. Some examples of things to test in a static phase include:
 
   * check if all the necessary files are present;
-  * perform plaigiarism checks;
+  * perform plaigiarism control;
   * check if student is trying to game the tests;
   * run student code through a linter;
   * compile the student code; and
-  * look for relevant regular and context-free patterns in the student code.
+  * check that the student code follows the desired strcutural patterns.
 
 Crucially, the source code of the static tests does not reveal the essential
 structure of a working solution to the assignment, merely some of its
