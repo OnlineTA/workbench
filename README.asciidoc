@@ -22,7 +22,7 @@ them, there are a couple sample good and bad solutions under
 
 For instance, you might consider running:
 
- $ ./workbench ./assignments/c-stackcalc/ ./submissions/c-stackcalc/good/
+ $ ./workbench ./assignments/c-stackcalc/ ./samples/c-stackcalc/good/
 
 == Testing Interface
 
