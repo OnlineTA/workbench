@@ -26,8 +26,8 @@ For instance, you might consider running:
 
 == Testing Interface
 
-The testing of a submission is stratified into strata, or phases. This has
-multiple benefits:
+The testing of a submission is stratified into phases. This has multiple
+benefits:
 
 . Preconditioning. For instance:
 
@@ -41,23 +41,23 @@ multiple benefits:
 
 . Security. There are several benefits in terms of security:
 
-  .. Breaking out of the sandbox in one strata, does not (immediately) give
-     any means to exploit the next strata.
+  .. Breaking out of the sandbox in one phase, does not (immediately) give
+     any means to exploit the next phase.
 
-  .. Different security models can be employed at different strata,
+  .. Different security models can be employed at different phase,
      reinforcing benefit 2.a., requiring to break out of multiple sandboxing
      approaches for ultimate exploitation of the testing system.
 
 One particular application of benefit 2.b., as exemplified in this workbench,
 is the split between static and dynamic testing.
 
-== Static Strata
+== Static Phases
 
-By declaring a static stratum, the teacher states that within this stratum, the
+By declaring a static phase, the teacher states that within this phase, the
 student submission is to be regarded as data --- it should never be succeptible
 to execution. Here, the teacher would like access to the files of the
 submission, and perhaps modify and create new files to pass on to future
-strata. Some examples of static tests include:
+phases. Some examples of things to test in a static phase include:
 
   * check if all the necessary files are present;
   * perform plaigiarism checks;
@@ -71,23 +71,23 @@ structure of a working solution to the assignment, merely some of its
 constituents (e.g. you should have a src directory, your code should compile
 without warnings, you should be using higher-order functions, etc.)
 
-If the student breaks out of the sandbox of a static stratum and gets to see
-the source code of the static tests, it will only give the insight which was
+If the student breaks out of the sandbox of a static phase, and gets to see the
+source code of the static tests, it will only give the insight which was
 already readily available through hints, or give insight into how to game the
-static tests. The latter problem can be caught due to breakage of subsequent
-strata, one of which should be a human TA.
+static tests. The gaming problem can be caught due to breakage of subsequent
+phases, one of which should be a human TA.
 
 (Outbreaks: The typical statement "breaking out of the sandbox" is more nuanced
 when simple andboxing mechanisms are composed to form more intricate sandboxes.
-For instance, it might be easier to leak the assessment code of a static strata
+For instance, it might be easier to leak the assessment code of a static phase
 than it is to leak other students' submissions, or make OnlineTA terminate the
 assessment prematurely with the grade that the student gets to decide.)
 
-== Dynamic Strata
+== Dynamic Phases
 
-By declaring a dynamic stratum, the teacher states that access is only needed
-to e.g. the input and output streams of the program submitted by the student
-(and not its source code). This means that the teacher and student code can run
+By declaring a dynamic phase, the teacher states that access is only needed to
+e.g. the input and output streams of the program submitted by the student (and
+not its source code). This means that the teacher and student code can run
 sandboxed from each other, and communicate via sockets, or a further
 constrained protocol. Some examples of dynamic tests include:
 
@@ -105,8 +105,8 @@ Of course, in the presence of vulnerabilities in assessment code, what is
 regarded as data may quickly turn into programs; and of course, source code can
 be exchanged via sockets.
 
-The separation into static and dynamic strata permits merely to employ
-different security models for each type of strata: employ different sandboxing
+The separation into static and dynamic phases permits merely to employ
+different security models for each type of phase: employ different sandboxing
 models for each type, and make clear, differentiating statements about their
 intent.  In particular, the static/dynamic split seems fairly self-evident for
 teachers in Computer Science to follow.
